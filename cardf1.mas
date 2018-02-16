@@ -1,4 +1,4 @@
-FILENAME=cardf1, SUFFIX=DFIX    ,                                               
+FILENAME=cardf1, SUFFIX=DFIX   ,                                               
  DATASET=map01/cardf1.csv, $                                                    
   SEGMENT=CARDF1, SEGTYPE=S5, $                                                 
     FIELDNAME=COUNTRY, ALIAS=COUNTRY, USAGE=A10, ACTUAL=A10, $                  

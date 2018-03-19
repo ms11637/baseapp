@@ -1,0 +1,8 @@
+[Version Information]
+Flow Version = 1
+[DataFlow SourceTargetView]
+DataFlowChildWindow(sql:) = 0,0,0,0,0,0,0
+DataFlowChildWindow(trg:srdmix91a_t:1) = 0,0,0,0,0,0,0
+[Dependency View]
+Coord(Item,START_PRC) = 0,0
+Coord(Item,DEP_MAIN) = 0,0

@@ -1,0 +1,12 @@
+SEGNAME=AUTHORS,                                                                
+TABLENAME=AUTHORS,                                                              
+KEYS=1, WRITE=YES,$                                                             
+FIELD=AU_ID, AUTOINCREMENT=YES, $                                               
+FIELD=AU_LNAME, SCD_TYPE=LKEY, $                                                
+FIELD=AU_FNAME,SCD_TYPE=TYPEII ,$                                               
+FIELD=CONTRACT,SCD_TYPE=ACTFLAG ,$                                              
+FIELD=PHONE,SCD_TYPE=TYPEI ,$                                                   
+FIELD=ADDRESS,SCD_TYPE=TYPEI ,$                                                 
+FIELD=CITY,SCD_TYPE=TYPEI ,$                                                    
+FIELD=STATE,SCD_TYPE=TYPEI ,$                                                   
+FIELD=ZIP,SCD_TYPE=TYPEI ,$                                                     

@@ -1,0 +1,13 @@
+ FILE = AUTHORS, SUFFIX = SQLMSS                                                
+ SEGNAME = AUTHORS, SEGTYPE = S0                                                
+   FIELD = AU_ID    , AU_ID    ,I11    ,I4  , MISSING=OFF  , FIELDTYPE=R   ,$   
+   FIELD = AU_LNAME , AU_LNAME ,A40    ,A40 , MISSING=OFF  ,$                   
+   FIELD = AU_FNAME , AU_FNAME ,A20    ,A20 , MISSING=ON   ,$                   
+   FIELD = PHONE    , PHONE    ,A12    ,A12 , MISSING=OFF  ,$                   
+   FIELD = ADDRESS  , ADDRESS  ,A40    ,A40 , MISSING=ON   ,$                   
+   FIELD = CITY     , CITY     ,A20    ,A20 , MISSING=ON   ,$                   
+   FIELD = STATE    , STATE    ,A2     ,A2  , MISSING=ON   ,$                   
+   FIELD = ZIP      , ZIP      ,A5     ,A5  , MISSING=ON   ,$                   
+   FIELD = CONTRACT , CONTRACT ,I11    ,I4  , MISSING=ON   ,$                   
+   FIELD = BEG_DATE , BEG_DATE ,YYMD   ,DATE, MISSING=ON   ,$                   
+   FIELD = END_DATE , END_DATE ,YYMD   ,DATE, MISSING=ON   ,$                   

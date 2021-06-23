@@ -1,0 +1,9 @@
+[Version Information]
+Flow Version = 0
+[DataFlow SourceTargetView]
+DataFlowChildWindow(sql) = 0,0,0,0,0,0,0
+DataFlowChildWindow(src:a_tcdc4_winlog:t1) = 0,95,113,143,161,0,0
+DataFlowChildWindow(trg:a_mar4_wintable:1) = 0,746,175,794,223,0,0
+[Dependency View]
+Coord(Item,START_PRC) = 120,30
+Coord(Item,DEP_MAIN) = 240,30

@@ -1,0 +1,132 @@
+-*DM_JOB_TYPE=1 
+-*DM_USERID=ms11637 
+-*DM_SERVER_RELEASE_GEN=M727706D_919 
+ 
+-*[WARNING] This flow is incomplete: 
+-* -- Missing selected columns or source 
+ 
+-*************************************************** 
+ 
+-:START_PRC 
+SET PANEL=9999 
+SET MORE=OFF 
+SET 2PARTNAME=ON 
+-RUN 
+ 
+-*[Variables to Control Request] 
+-SET &&CM__TARGET = 'srdmix91a_t'; 
+-SET &&CM__AUTHOR = 'ms11637'; 
+-SET &&CM__REQUEST = '&FOCFEXNAME.EVAL'; 
+-SET &&CM__RETURN = 0; 
+-SET &&CM__FOCCPU = &FOCCPU.EVAL; 
+-DEFAULT &DBMSERROR = 10000000 
+-DEFAULT &STARTAT = 0 
+-DEFAULT &STOPAT  = 1000000000 
+ 
+-TYPE  (ICM18122) Request - &FOCFEXNAME (Owner: ms11637) submitted. 
+-GOTO :DEP_MAIN; 
+ 
+-:DEP_MAIN 
+-TYPE  (ICM18741) baseapp/srdmix91a_t type MS SQL Server ODBC New target 
+ 
+SET CASESTAT=EXTENDED 
+SQL SET UPCASE=OFF; END 
+ 
+-IF (&SQLAPT EQ 'APT') GOTO :SKIPHOLD; 
+ 
+-TYPE  (ICM18440) Request will process data via NON-Pass Through (NON-APT) 
+-TYPE  (ICM18451) HOLD file will be created for output file named: SQLIN. 
+ 
+SQL EXECUTE SQLIN; 
+TABLE ON TABLE HOLD AS  
+SQLIN 
+ FORMAT DATREC 
+IF RECORDLIMIT EQ &STOPAT  
+END 
+-RUN 
+-SET &&CM__RETURN = &FOCERRNUM; 
+-IF (&&CM__RETURN NE 0) GOTO :ENDJOB; 
+ 
+-:SKIPHOLD 
+ 
+EX -lines 3 EDAPUT MASTER,baseapp/srdmix91a_t,CV,FILE, 
+FILENAME=srdmix91a_t, SUFFIX=MSODBC  , $ 
+  SEGMENT=SRDMIX91A_T, SEGTYPE=S0, $ 
+ 
+EX -lines 2 EDAPUT ACCESS,baseapp/srdmix91a_t,CV,FILE, 
+ SEGNAME=SRDMIX91A_T, TABLENAME=srdmix91a_t, CONNECTION=CON1, $ 
+ 
+ 
+-TYPE  (ICM18054) Issuing CREATE and DROP TABLE for srdmix91a_t 
+CREATE FILE baseapp/srdmix91a_t DROP 
+-RUN 
+-SET &&CM__RETURN = &FOCERRNUM; 
+-IF (&&CM__RETURN NE 0) GOTO :ENDJOB; 
+ 
+-TYPE  (ICM18701) Insert Records From Memory. INSERTSIZE = 1000 
+SQL MSODBC SET INSERTSIZE 1000 
+-TYPE  (ICM18743) Starting Load 
+ 
+MODIFY FILE baseapp/srdmix91a_t 
+ GOTO MATCHIT1 
+  
+ CASE MATCHIT1 
+-* ERROR !!! 
+-* ERROR !!! 
+  GOTO TOP 
+ ENDCASE 
+  
+ CASE AT START 
+  START &STARTAT 
+  STOP  &STOPAT  
+  STOP  DBMSERRORS &DBMSERROR 
+  
+  SQL SET LOADONLY  
+  LOG DBMSERR MSG OFF 
+  LOG DUPL    MSG OFF 
+  LOG INVALID MSG OFF 
+  LOG NOMATCH MSG OFF 
+  LOG FORMAT  MSG OFF 
+  LOG ACCEPT  MSG OFF 
+  LOG TRANS   MSG OFF 
+  CHECK 500000 
+ ENDCASE 
+ DATA VIA SQLGET 
+END 
+-RUN 
+ 
+-TYPE  (ICM18744) Ending Load 
+-SET &&CM__RETURN = &FOCERRNUM; 
+-SET &&CM__RETURN = IF (&&CM__RETURN EQ 1416) AND (&DBMSERR LT &DBMSERROR) 
+- THEN 0 ELSE &&CM__RETURN; 
+ 
+-:ENDJOB 
+-TYPE  (ICM18040) Return Code = &&CM__RETURN 
+ 
+SET CASESTAT=OFF 
+SQL SET UPCASE=ON; END 
+SET EMGSRV=OFF 
+SQL PURGE SQLIN; 
+END 
+FI SQLIN CLEAR 
+ 
+SET EMGSRV=ON 
+SQL MSODBC 
+COMMIT WORK; 
+END 
+-RUN 
+ 
+-TYPE  (ICM18076) Request: &FOCFEXNAME - finished processing 
+ 
+-SET &&CM__FOCCPU = &FOCCPU.EVAL - &&CM__FOCCPU; 
+-TYPE  (ICM18007) CPU Time : &&CM__FOCCPU 
+ 
+-*[Main Condition] 
+-*[Main End] 
+ 
+-*[Dependence] 
+-:ENDDEP 
+SET PANEL=0 
+SET MORE=ON 
+SET 2PARTNAME=OFF 
+-RUN 

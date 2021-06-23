@@ -1,0 +1,17 @@
+FILENAME=A_TCDC4_WINLOG1, SUFFIX=SQLMYSQL, $
+ VARIABLE NAME=&&CDC_POLLING,  PROMPT='DBMS log polling interval (in seconds) for LUW', USAGE=I5, DEFAULT='1', $
+ VARIABLE NAME=&&CDC_TIMEOUT,  PROMPT='Timeout interval (in seconds) to listen DBMS log for LUW', USAGE=I5, DEFAULT='1', $
+ VARIABLE NAME=&&CDC_START,  PROMPT='Starting point in reading log records', DEFAULT='CHKPT',
+     ACCEPT=DECODE(<'CHKPT - After last LUW retained in checkpoint file', 'CHKPT'>, <'CUR_TRAN - First LUW after DBMS log reading started', 'CUR_TRAN'>, <'CUR_LOG - First available LUW in DBMS log', 'CUR_LOG'>), $
+ VARIABLE NAME=&&CDC_MAXLUWS,  PROMPT='Maximum number of LUWs processed in the request', USAGE=I10, DEFAULT='1', $
+ VARIABLE NAME=&&CDC_CHKPT_SAVE,  PROMPT='Retain last processed LUW in checkpoint file', DEFAULT='YES',
+     ACCEPT=DECODE(<'YES - Retain last processed LUW in checkpoint file', 'YES'>, <'NO - Don''t retain LUWs in checkpoint file', 'NO'>), $
+ VARIABLE NAME=&&CDC_CHKPT_FILE,  PROMPT='Checkpoint file location', USAGE=A99, DEFAULT=' ', $
+  SEGMENT=A_TCDC4_WINLOG1, SEGTYPE=S0, $
+    FIELDNAME=CDC_OPER, ALIAS=__C1, USAGE=A1, ACTUAL=A1, $
+    FIELDNAME=CDC_TID, ALIAS=__C2, USAGE=A32, ACTUAL=A32, $
+    FIELDNAME=CDC_TIMES, ALIAS=__C3, USAGE=A26, ACTUAL=A26, $
+    FIELDNAME=EMP_ID, ALIAS=EMP_ID, USAGE=A9, ACTUAL=A9, $
+    FIELDNAME=LAST_NAME, ALIAS=LAST_NAME, USAGE=A15, ACTUAL=A15, $
+    FIELDNAME=FIRST_NAME, ALIAS=FIRST_NAME, USAGE=A10, ACTUAL=A10, $
+    FIELDNAME=HIRE_DATE, ALIAS=HIRE_DATE, USAGE=YYMD, ACTUAL=DATE, $
